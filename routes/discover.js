@@ -60,6 +60,8 @@ route.get('/:category/:shuffle', async (req, res, next) => {
 			res.status(400).send('Bad Request');
 		}
 
+		let skip = parseInt(shuffle) || 0;
+
 		let sort = 1;
 		if (sortByDate) {
 			if (sortByDate == 'asc') {
@@ -78,7 +80,8 @@ route.get('/:category/:shuffle', async (req, res, next) => {
 			...filter,
 		})
 			.limit(4)
-			.sort({ createdAt: sort });
+			.sort({ createdAt: sort })
+			.skip(skip);
 
 		res.json(galleryDetails);
 	} catch {
