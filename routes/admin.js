@@ -19,3 +19,5 @@ route.get('/add-category/:categoryName', async (req, res, next) => {
 		next(error);
 	}
 });
+
+module.exports = route;
