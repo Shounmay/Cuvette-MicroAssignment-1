@@ -4,6 +4,7 @@ const express = require('express');
 const initializeDatabase = require('./config/db');
 const app = express();
 const admin = require('./routes/admin');
+const discover = require('./routes/discover');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +20,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/admin', admin);
+app.use('/api/discover', discover);
 
 //404 not found middleware
 app.use((req, res, next) =>
