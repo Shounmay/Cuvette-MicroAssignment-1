@@ -18,18 +18,67 @@ route.get('/get-all-categories', async (req, res, next) => {
 	}
 });
 
+route.post('/like/:imageId', async (req, res, next) => {
+	try {
+		const imageId = req.params.imageId;
+		if (!imageId) {
+			res.status(400).send('Bad Request');
+		}
+
+		let likeValue;
+
+		const imageDetails = await GalleryModel.findOne({ _id: imageId });
+
+		if (imageDetails) {
+			if (imageDetails.likes) {
+				likeValue = 0;
+			} else {
+				likeValue = 1;
+			}
+		}
+
+		await GalleryModel.updateOne(
+			{ _id: imageId },
+			{ $set: { likes: likeValue } }
+		);
+
+		res.send('Favorite updated successfully');
+	} catch (error) {
+		console.log(error);
+		next(error);
+	}
+});
+
 route.get('/:category/:shuffle', async (req, res, next) => {
 	try {
 		const category = req.params.category;
 		const shuffle = req.params.shuffle;
+		const sortByDate = req.query.sortByDate;
+		const filterByLike = req.query.filterByLike;
 
 		if (!category) {
 			res.status(400).send('Bad Request');
 		}
 
+		let sort = 1;
+		if (sortByDate) {
+			if (sortByDate == 'asc') {
+				sort = 1;
+			} else if (sortByDate == 'desc') {
+				sort = -1;
+			}
+		}
+		let filter = {};
+		if (filterByLike) {
+			filter = { likes: 1 };
+		}
+
 		const galleryDetails = await GalleryModel.find({
 			category: { $in: [category] },
-		}).limit(4);
+			...filter,
+		})
+			.limit(4)
+			.sort({ createdAt: sort });
 
 		res.json(galleryDetails);
 	} catch {
