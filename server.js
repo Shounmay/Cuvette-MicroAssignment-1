@@ -20,6 +20,7 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/admin', admin);
 
+//404 not found middleware
 app.use((req, res, next) =>
 	res.status(404).send('You are looking for something that we not have!')
 );
