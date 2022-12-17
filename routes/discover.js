@@ -18,6 +18,7 @@ route.get('/get-all-categories', async (req, res, next) => {
 	}
 });
 
+//added to favorites API
 route.post('/like/:imageId', async (req, res, next) => {
 	try {
 		const imageId = req.params.imageId;
