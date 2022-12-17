@@ -1,8 +1,10 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const express = require('express');
-
+const initializeDatabase = require('./config/db');
 const app = express();
+
+initializeDatabase();
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.host || 'localhost';
