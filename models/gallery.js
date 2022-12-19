@@ -6,6 +6,7 @@ const gallerySchema = new Schema(
 		name: {
 			type: String,
 			required: true,
+			unique: true,
 		},
 		category: { type: Array, required: true },
 		likes: { type: Number, default: 0 },

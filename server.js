@@ -27,7 +27,9 @@ app.use((req, res, next) =>
 	res.status(404).send('You are looking for something that we not have!')
 );
 
-app.use((err, req, res, next) => res.status(500).send('Something went wrong!'));
+app.use((err, req, res, next) =>
+	res.status(500).send('Something went wrong in our server!')
+);
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.host || 'localhost';

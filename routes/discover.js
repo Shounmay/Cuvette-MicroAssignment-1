@@ -50,7 +50,7 @@ route.post('/like/:imageId', async (req, res, next) => {
 	}
 });
 
-route.get('/:category/:shuffle', async (req, res, next) => {
+route.get('/:category/:shuffle?', async (req, res, next) => {
 	try {
 		const category = req.params.category;
 		const shuffle = req.params.shuffle;
@@ -78,7 +78,7 @@ route.get('/:category/:shuffle', async (req, res, next) => {
 
 		const galleryDetails = await GalleryModel.find({
 			category: { $in: [category] },
-			...filter,
+			...filter, //filter to be expanded in the form of an object
 		})
 			.limit(4)
 			.sort({ createdAt: sort })
