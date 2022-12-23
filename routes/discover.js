@@ -31,11 +31,7 @@ route.post('/like/:imageId', async (req, res, next) => {
 		const imageDetails = await GalleryModel.findOne({ _id: imageId });
 
 		if (imageDetails) {
-			if (imageDetails.likes) {
-				likeValue = 0;
-			} else {
-				likeValue = 1;
-			}
+			likeValue = imageDetails.likes ^ 1; //xor with 1 to toggle the like value
 		}
 
 		await GalleryModel.updateOne(
