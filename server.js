@@ -6,6 +6,8 @@ const app = express();
 const admin = require('./routes/admin');
 const discover = require('./routes/discover');
 
+app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
